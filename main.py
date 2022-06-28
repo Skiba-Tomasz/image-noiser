@@ -46,6 +46,7 @@ def createOutputDir(file):
     return dir
 
 def processFile(file):
+    print(f'Processing file: ${file}')
     outputDir = createOutputDir(file)
     image = Image.open(INPUT_DIR + file)
     # 1 Transformation
@@ -85,8 +86,8 @@ def processFile(file):
     files = loadFiles(outputDir) # There were some duplicates in allImages list so reload unique images based on md5 saved gallery
     textImages = [Image.open(outputDir + f) for f in files]
     for i in range(len(textImages)):
-        for x in range(0, 5):
-            for y in range(0, 5):
+        for x in range(0, 2):
+            for y in range(0, 2):
                 img = copy.deepcopy(textImages[i])
                 d = ImageDraw.Draw(img)
                 randText = ''
@@ -96,7 +97,7 @@ def processFile(file):
                     randText += ''.join(rand.choices(string.ascii_letters, k = textSize))
                     if l < lines - 1:
                         randText += '\n'
-                d.multiline_text((x*10, y*10), randText, font=fnt, fill=(0, 0, 0))
+                d.multiline_text((x*40, y*40), randText, font=fnt, fill=(0, 0, 0))
                 saveImageWithMD5Name(img, outputDir)
 
 
